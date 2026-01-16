@@ -11,21 +11,23 @@
         .container { background: #fff; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .logo { width: 60px; height: 60px; background: #1a4a9e; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px; color: #fff; font-weight: bold; font-size: 24px; border: 2px solid #eee; }
         h2 { margin: 10px 0; color: #333; }
+        #success-msg { display: none; color: #27ae60; font-weight: bold; margin-bottom: 15px; border: 1px solid #27ae60; padding: 10px; border-radius: 5px; background: #f0fff4; }
         input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #0d47a1; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
-        button:hover { background: #1565c0; }
+        button { width: 100%; padding: 12px; background: #0d47a1; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo">WE</div>
         <h2>Waleed Enterprize</h2>
-        <p style="color:red; font-size: 12px; font-weight: bold;">SITE UNDER CONSTRUCTION</p>
+        <p style="color:red; font-size: 11px; font-weight: bold;">SITE UNDER CONSTRUCTION</p>
         
+        <div id="success-msg">✓ FORM SUBMITTED! CHECK YOUR GMAIL APP TO SEND.</div>
+
         <form id="contactForm">
-            <input type="text" id="name" placeholder="Name" required>
-            <input type="email" id="userEmail" placeholder="Email" required>
-            <textarea id="message" placeholder="Message..." rows="4" required></textarea>
+            <input type="text" id="name" placeholder="Full Name" required>
+            <input type="email" id="userEmail" placeholder="Your Email Address" required>
+            <textarea id="message" placeholder="Type your message here..." rows="4" required></textarea>
             <button type="submit">Send Message</button>
         </form>
     </div>
@@ -38,14 +40,19 @@
             const email = document.getElementById('userEmail').value;
             const msg = document.getElementById('message').value;
             
-            // Ye seedha aapki email par bhejega bina kisi error ke
+            // 1. Mailto link taiyar karein
             const mailtoLink = `mailto:infowaleedenterprises9@gmail.com?subject=New Message from ${name}&body=Sender Email: ${email}%0D%0AMessage: ${msg}`;
             
+            // 2. Gmail App kholen
             window.location.href = mailtoLink;
             
-            alert("Aapka Email App khul raha hai, bas 'Send' dabayein!");
+            // 3. Form ko reset aur hide karein taake text likha hua na rahe
+            document.getElementById('contactForm').reset();
+            document.getElementById('contactForm').style.display = "none";
+            document.getElementById('success-msg').style.display = "block";
+
+            alert("Opening your Email App... Please press 'Send' button there.");
         });
     </script>
 </body>
 </html>
-
