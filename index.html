@@ -10,58 +10,48 @@
         body { font-family: sans-serif; background: #1a4a9e; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .container { background: #fff; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .logo { width: 60px; height: 60px; background: #1a4a9e; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px; color: #fff; font-weight: bold; font-size: 24px; border: 2px solid #eee; }
-        h2 { margin: 10px 0; color: #333; }
         #success { display: none; color: #27ae60; font-weight: bold; margin-bottom: 15px; border: 1px solid #27ae60; padding: 10px; border-radius: 5px; background: #f0fff4; }
         input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #0d47a1; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
-        button:hover { background: #1565c0; }
-        button:disabled { background: #ccc; }
+        button { width: 100%; padding: 12px; background: #0d47a1; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo">WE</div>
         <h2>Waleed Enterprize</h2>
-        <p style="color:red; font-size: 12px; font-weight: bold;">SITE UNDER CONSTRUCTION</p>
+        <p style="color:red; font-size: 12px;">SITE UNDER CONSTRUCTION</p>
         
-        <div id="success">✓ SUBMITTED SUCCESSFULLY!</div>
+        <div id="success">✓ MESSAGE SENT SUCCESSFULLY!</div>
         
-        <form id="contactForm" action="https://formspree.io/f/mqajvvoz" method="POST">
-            <input type="text" name="name" placeholder="Full Name" required>
-            <input type="email" name="_replyto" placeholder="Your Email Address" required>
-            <textarea name="message" placeholder="Type your message..." rows="4" required></textarea>
-            <button type="submit" id="submitBtn">Send Message</button>
+        <form action="https://formspree.io/f/mqajvvoz" method="POST" id="my-form">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Message" rows="4" required></textarea>
+            <button type="submit" id="btn">Send Message</button>
         </form>
     </div>
 
     <script>
-        var form = document.getElementById("contactForm");
-        form.addEventListener("submit", function(e) {
+        var form = document.getElementById("my-form");
+        form.onsubmit = function(e) {
             e.preventDefault();
-            var btn = document.getElementById("submitBtn");
-            var successMsg = document.getElementById("success");
-            
+            var btn = document.getElementById("btn");
             btn.innerText = "Sending...";
-            btn.disabled = true;
-
+            
             fetch(form.action, {
                 method: "POST",
                 body: new FormData(form),
                 headers: { 'Accept': 'application/json' }
             }).then(response => {
                 if (response.ok) {
-                    successMsg.style.display = "block";
+                    document.getElementById("success").style.display = "block";
                     form.style.display = "none";
                 } else {
-                    alert("Please verify your email! Check infowaleedenterprises9@gmail.com");
-                    btn.disabled = false;
+                    alert("Please check your email infowaleedenterprises9@gmail.com and click Verify!");
                     btn.innerText = "Send Message";
                 }
-            }).catch(error => {
-                alert("Network Error. Please try again.");
-                btn.disabled = false;
             });
-        });
+        };
     </script>
 </body>
 </html>
