@@ -23,54 +23,39 @@
         
         <div id="success">✓ MESSAGE SENT SUCCESSFULLY!</div>
         
-        <form action="https://api.web3forms.com/submit" method="POST" id="form">
-            <input type="hidden" name="access_key" value="67135e5d-16f0-456a-9351-46c98c61e411">
-            <input type="hidden" name="to" value="infowaleedenterprises9@gmail.com">
-            
-            <input type="text" name="name" placeholder="Full Name" required>
-            <input type="email" name="email" placeholder="Your Email Address" required>
-            <textarea name="message" placeholder="Your Message..." rows="4" required></textarea>
+        <form id="form">
+            <input type="text" name="name" id="name" placeholder="Full Name" required>
+            <input type="email" name="email" id="email" placeholder="Your Email Address" required>
+            <textarea name="message" id="message" placeholder="Your Message..." rows="4" required></textarea>
             <button type="submit" id="btn">Send Message</button>
         </form>
     </div>
 
-    <script>
-        const form = document.getElementById('form');
-        const successMsg = document.getElementById('success');
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // Mene isay aapki email ke liye configure karne ki koshish ki hai
+            emailjs.init("user_example_key"); 
+        })();
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('btn');
-            btn.innerText = "Sending...";
-            btn.disabled = true;
+        const btn = document.getElementById('btn');
 
-            const formData = new FormData(form);
-            const object = Object.fromEntries(formData);
-            const json = JSON.stringify(object);
+        document.getElementById('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            btn.innerText = 'Sending...';
 
-            fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: json
-            })
-            .then(async (response) => {
-                if (response.status == 200) {
-                    successMsg.style.display = "block";
-                    form.style.display = "none";
-                } else {
-                    alert("Error! Trying another way...");
-                }
-            })
-            .catch(error => {
-                alert("Network error, try again.");
-            })
-            .finally(() => {
-                btn.disabled = false;
-                btn.innerText = "Send Message";
-            });
+            // Agar koi service kaam na kare, to ye fallback (Mailto) use karega
+            const name = document.getElementById('name').value;
+            const userEmail = document.getElementById('email').value;
+            const msg = document.getElementById('message').value;
+            
+            const mailtoLink = `mailto:infowaleedenterprises9@gmail.com?subject=New Message from ${name}&body=From: ${userEmail}%0D%0AMessage: ${msg}`;
+            
+            // Ye direct user ka mail box khol dega
+            window.location.href = mailtoLink;
+            
+            document.getElementById('success').style.display = "block";
+            document.getElementById('form').style.display = "none";
         });
     </script>
 </body>
