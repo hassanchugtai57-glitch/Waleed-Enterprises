@@ -1,60 +1,67 @@
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta name="google-site-verification" content="mJ0yTS1BV6pDmUwYPIb9sac8rY3KmGMwMQyo6KAJQN8" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waleed Enterprises</title>
-        <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%231a4a9e%22/><text y=%22.9em%22 font-size=%2260%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22 x=%2210%22>WE</text></svg>">
+    <title>Waleed Enterprize</title>
+    <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%231a4a9e%22/><text y=%22.9em%22 font-size=%2260%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22 x=%2210%22>WE</text></svg>">
+
     <style>
-        body { margin: 0; font-family: sans-serif; background: linear-gradient(135deg, #1e3a8a, #3b82f6); display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .container { background: #f3f4f6; width: 90%; max-width: 450px; padding: 40px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        h1 { color: #1e3a8a; margin-bottom: 5px; }
-        .status { color: #b91c1c; font-weight: bold; font-size: 13px; margin-bottom: 25px; }
-        input, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        .send-btn { width: 100%; padding: 12px; background-color: #1e40af; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; text-decoration: none; display: block; }
-        hr { border: 0; border-top: 1px solid #ddd; margin: 25px 0; }
-        .qna { text-align: left; }
+        body { font-family: sans-serif; background: #1a4a9e; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background: #fff; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .logo { width: 60px; height: 60px; background: #1a4a9e; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px; color: #fff; font-weight: bold; font-size: 24px; border: 2px solid #eee; }
+        h2 { margin: 10px 0; color: #333; }
+        #success { display: none; color: #27ae60; font-weight: bold; margin-bottom: 15px; border: 1px solid #27ae60; padding: 10px; border-radius: 5px; background: #f0fff4; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #0d47a1; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
+        button:hover { background: #1565c0; }
+        button:disabled { background: #ccc; }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>Waleed Enterprises</h1>
-    <div class="status">THE SITE IS UNDER CONSTRUCTION</div>
-
-    <form id="emailForm">
-        <input type="text" id="name" placeholder="Name" required>
-        <input type="text" id="subject" placeholder="Subject" required>
-        <textarea id="message" rows="4" placeholder="Message" required></textarea>
+    <div class="container">
+        <div class="logo">WE</div>
+        <h2>Waleed Enterprize</h2>
+        <p style="color:red; font-size: 12px; font-weight: bold;">SITE UNDER CONSTRUCTION</p>
         
-        <button type="button" onclick="sendEmail()" class="send-btn">Send Message</button>
-    </form>
-
-    <hr>
-    <div class="qna">
-        <h3 style="margin-bottom:5px;">Recent Q&A:</h3>
-        <span style="font-size:12px; color:#aaa;">Infowaleedenterprises9@gmail.com</span>
+        <div id="success">✓ SUBMITTED SUCCESSFULLY!</div>
+        
+        <form id="contactForm" action="https://formspree.io/f/mqajvvoz" method="POST">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="_replyto" placeholder="Your Email Address" required>
+            <textarea name="message" placeholder="Type your message..." rows="4" required></textarea>
+            <button type="submit" id="submitBtn">Send Message</button>
+        </form>
     </div>
-</div>
 
-<script>
-function sendEmail() {
-    var name = document.getElementById('name').value;
-    var subject = document.getElementById('subject').value;
-    var message = document.getElementById('message').value;
-    
-    // Ye link direct email bhejne ke liye hai
-    var mailto_link = 'mailto:Infowaleedenterprises9@gmail.com?subject=' + encodeURIComponent(subject) + 
-                      '&body=' + encodeURIComponent("Name: " + name + "\n\nMessage: " + message);
-    
-    window.location.href = mailto_link;
-}
-</script>
+    <script>
+        var form = document.getElementById("contactForm");
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            var btn = document.getElementById("submitBtn");
+            var successMsg = document.getElementById("success");
+            
+            btn.innerText = "Sending...";
+            btn.disabled = true;
 
+            fetch(form.action, {
+                method: "POST",
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    successMsg.style.display = "block";
+                    form.style.display = "none";
+                } else {
+                    alert("Please verify your email! Check infowaleedenterprises9@gmail.com");
+                    btn.disabled = false;
+                    btn.innerText = "Send Message";
+                }
+            }).catch(error => {
+                alert("Network Error. Please try again.");
+                btn.disabled = false;
+            });
+        });
+    </script>
 </body>
 </html>
-
-
-
-
