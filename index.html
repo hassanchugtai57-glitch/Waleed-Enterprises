@@ -10,9 +10,10 @@
         body { font-family: sans-serif; background: #1a4a9e; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .container { background: #fff; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .logo { width: 60px; height: 60px; background: #1a4a9e; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px; color: #fff; font-weight: bold; font-size: 24px; border: 2px solid #eee; }
-        #success { display: none; color: #27ae60; font-weight: bold; margin-bottom: 15px; border: 1px solid #27ae60; padding: 10px; border-radius: 5px; background: #f0fff4; }
+        h2 { margin: 10px 0; color: #333; }
         input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #0d47a1; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        button { width: 100%; padding: 12px; background: #0d47a1; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
+        button:hover { background: #1565c0; }
     </style>
 </head>
 <body>
@@ -21,41 +22,28 @@
         <h2>Waleed Enterprize</h2>
         <p style="color:red; font-size: 12px; font-weight: bold;">SITE UNDER CONSTRUCTION</p>
         
-        <div id="success">✓ MESSAGE SENT SUCCESSFULLY!</div>
-        
-        <form id="form">
-            <input type="text" name="name" id="name" placeholder="Full Name" required>
-            <input type="email" name="email" id="email" placeholder="Your Email Address" required>
-            <textarea name="message" id="message" placeholder="Your Message..." rows="4" required></textarea>
-            <button type="submit" id="btn">Send Message</button>
+        <form id="contactForm">
+            <input type="text" id="name" placeholder="Apna Naam Likhen" required>
+            <input type="email" id="userEmail" placeholder="Apni Email Likhen" required>
+            <textarea id="message" placeholder="Apna Message Likhen..." rows="4" required></textarea>
+            <button type="submit">Send Message</button>
         </form>
     </div>
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            // Mene isay aapki email ke liye configure karne ki koshish ki hai
-            emailjs.init("user_example_key"); 
-        })();
-
-        const btn = document.getElementById('btn');
-
-        document.getElementById('form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            btn.innerText = 'Sending...';
-
-            // Agar koi service kaam na kare, to ye fallback (Mailto) use karega
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
             const name = document.getElementById('name').value;
-            const userEmail = document.getElementById('email').value;
+            const email = document.getElementById('userEmail').value;
             const msg = document.getElementById('message').value;
             
-            const mailtoLink = `mailto:infowaleedenterprises9@gmail.com?subject=New Message from ${name}&body=From: ${userEmail}%0D%0AMessage: ${msg}`;
+            // Ye seedha aapki email par bhejega bina kisi error ke
+            const mailtoLink = `mailto:infowaleedenterprises9@gmail.com?subject=New Message from ${name}&body=Sender Email: ${email}%0D%0AMessage: ${msg}`;
             
-            // Ye direct user ka mail box khol dega
             window.location.href = mailtoLink;
             
-            document.getElementById('success').style.display = "block";
-            document.getElementById('form').style.display = "none";
+            alert("Aapka Email App khul raha hai, bas 'Send' dabayein!");
         });
     </script>
 </body>
